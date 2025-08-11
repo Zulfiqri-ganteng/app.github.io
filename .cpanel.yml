@@ -1,48 +1,8 @@
 ---
 deployment:
   tasks:
-    # 🔹 1. Tentukan path tujuan deploy
-    - export DEPLOY_PATH=/home/sewx2253/public_html/app.sewaambulaneindonesia24jam.com
-    - echo "🚀 Memulai proses deploy otomatis"
-    - echo "📁 Target: $DEPLOY_PATH"
-    - echo "📅 Waktu: $(date)"
-
-    # 🔹 2. Pastikan folder tujuan ada
-    - if [ ! -d "$DEPLOY_PATH" ]; then
-      echo "🔧 Folder tujuan tidak ada. Membuat folder...";
-      mkdir -p $DEPLOY_PATH;
-      echo "✅ Folder berhasil dibuat";
-      else
-      echo "✅ Folder tujuan sudah ada.";
-      fi
-
-    # 🔹 3. Hapus semua file lama (termasuk file tersembunyi)
-    - echo "🧹 Membersihkan file lama..."
-    - /bin/rm -rf $DEPLOY_PATH/*
-    - /bin/rm -rf $DEPLOY_PATH/.[^.]* 2>/dev/null || echo "ℹ️ Tidak ada file tersembunyi (.htaccess, dll)"
-
-    # 🔹 4. Salin semua file dari repositori ke folder tujuan
-    - echo "📦 Menyalin file baru ke $DEPLOY_PATH..."
-    - /bin/cp -rf ./* $DEPLOY_PATH
-    - /bin/cp -rf ./.[^.]* $DEPLOY_PATH 2>/dev/null || echo "ℹ️ Tidak ada file tersembunyi untuk disalin"
-
-    # 🔹 5. Setel izin akses yang aman
-    - echo "🔐 Mengatur izin file dan folder..."
-    - /bin/chmod -R 644 $DEPLOY_PATH
-    - /bin/chmod -R 755 $DEPLOY_PATH/application $DEPLOY_PATH/system $DEPLOY_PATH/vendor $DEPLOY_PATH/assets $DEPLOY_PATH/uploads 2>/dev/null || true
-    - /bin/chmod 644 $DEPLOY_PATH/.htaccess 2>/dev/null || echo "ℹ️ File .htaccess tidak ditemukan"
-    - /bin/chmod 644 $DEPLOY_PATH/index.php 2>/dev/null || true
-
-    # 🔹 6. Pastikan folder uploads bisa ditulis (penting untuk upload gambar, dokumen, dll)
-    - /bin/chmod -R 777 $DEPLOY_PATH/uploads 2>/dev/null || echo "⚠️ Peringatan: Folder uploads tidak ada atau tidak perlu writable"
-
-    # 🔹 7. Bersihkan cache CodeIgniter (opsional, tapi disarankan)
-    - echo "🧹 Membersihkan cache dan log lama..."
-    - /bin/rm -rf $DEPLOY_PATH/application/cache/*
-    - /bin/rm -rf $DEPLOY_PATH/application/logs/log-*.php 2>/dev/null || echo "ℹ️ Tidak ada log lama"
-
-    # 🔹 8. Selesai! Notifikasi sukses
-    - echo "✅ DEPLOY BERHASIL!"
-    - echo "🔗 Buka website: https://app.sewaambulaneindonesia24jam.com"
-    - echo "✨ Selamat! Website telah diperbarui secara otomatis."
-    - echo "🔚 Proses selesai pada: $(date)"
+    - export TARGET=/home/sewx2253/public_html/app.sewaambulaneindonesia24jam.com
+    - /bin/rm -rf $TARGET/*
+    - /bin/rm -rf $TARGET/.[!.]*
+    - /bin/cp -rf ./* $TARGET
+    - /bin/cp -rf ./.[!.]* $TARGET 2>/dev/null || echo "Tidak ada file tersembunyi (.htaccess, dll)"
