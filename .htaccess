@@ -1,25 +1,43 @@
-# Aktifkan mod_rewrite
+# ----------------------------------------------------------------------
+
+# 🔧 Aktifkan mod_rewrite
+
+# ----------------------------------------------------------------------
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
 
-    # Jika kamu pakai subfolder (opsional), aktifkan baris ini:
+    # Jika website di subfolder (opsional), aktifkan baris ini:
     # RewriteBase /app.sewaambulaneindonesia24jam.com/
 
-    # Jangan sentuh file atau folder yang benar-benar ada (seperti assets, js, css)
+    # Jangan rewrite jika file/folder benar-benar ada (assets, js, css, dll)
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
 
     # Arahkan semua permintaan ke index.php
     RewriteRule ^(.*)$ index.php/$1 [L]
 
-RewriteCond $1 !^(application|system|vendor) [NC]
 </IfModule>
 
-# Blokir akses ke file tersembunyi (seperti .git, .env)
+# ----------------------------------------------------------------------
+
+# 🔒 Blokir akses ke file sensitif (.git, .env, dll)
+
+# ----------------------------------------------------------------------
 
 <FilesMatch "^\.">
 Order allow,deny
 Deny from all
 </FilesMatch>
+
+# ----------------------------------------------------------------------
+
+# 🛡 Blokir akses langsung ke folder application & system
+
+# ----------------------------------------------------------------------
+
+<IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_URI} ^/(application|system|vendor)/.*$
+    RewriteRule ^(.*)$ - [F,L]
+</IfModule>
