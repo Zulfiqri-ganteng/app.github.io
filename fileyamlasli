@@ -1,0 +1,8 @@
+---
+deployment:
+  tasks:
+    - export TARGET=/home/sewx2253/public_html/app.sewaambulaneindonesia24jam.com
+    - /bin/rm -rf $TARGET/*
+    - /bin/rm -rf $TARGET/.[!.]*
+    - /bin/cp -rf ./* $TARGET
+    - /bin/cp -rf ./.[!.]* $TARGET 2>/dev/null || echo "Tidak ada file tersembunyi (.htaccess, dll)"
