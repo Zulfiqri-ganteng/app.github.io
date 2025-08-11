@@ -14,6 +14,7 @@
     # Arahkan semua permintaan ke index.php
     RewriteRule ^(.*)$ index.php/$1 [L]
 
+RewriteCond $1 !^(application|system|vendor) [NC]
 </IfModule>
 
 # Blokir akses ke file tersembunyi (seperti .git, .env)
