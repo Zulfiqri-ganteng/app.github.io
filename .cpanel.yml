@@ -1,0 +1,22 @@
+---
+deployment:
+  tasks:
+    - export DEPLOY_PATH=/home/sewx2253/public_html/app
+    - echo "🧹 Membersihkan folder lama..."
+    - /bin/rm -rf $DEPLOY_PATH/*
+    - /bin/rm -rf $DEPLOY_PATH/.[!.]*
+    - echo "✅ Folder lama berhasil dibersihkan"
+
+    - echo "📦 Menyalin file baru ke $DEPLOY_PATH..."
+    - /bin/cp -rf ./* $DEPLOY_PATH
+    - /bin/cp -rf ./.[!.]* $DEPLOY_PATH 2>/dev/null || echo "ℹ️ Tidak ada file tersembunyi (seperti .htaccess)"
+    - echo "✅ Deploy selesai! File telah disalin ke /public_html/app"
+
+    - echo "🔧 Setel izin file yang aman..."
+    - /bin/chmod -R 644 $DEPLOY_PATH
+    - /bin/chmod -R 755 $DEPLOY_PATH/application 2>/dev/null || echo "ℹ️ Tidak ada folder application (opsional)"
+    - /bin/chmod -R 755 $DEPLOY_PATH/system 2>/dev/null || echo "ℹ️ Tidak ada folder system (opsional)"
+    - /bin/chmod 644 $DEPLOY_PATH/.htaccess 2>/dev/null || echo "ℹ️ Tidak ada .htaccess"
+    - echo "✅ Izin file telah disetel"
+
+    - echo "🚀 Deploy otomatis selesai! Buka: https://app.sewaambulaneindonesia24jam.com"

@@ -23,7 +23,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/smk_galajuara/';
+// $config['base_url'] = 'http://localhost/smk_galajuara/';
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+$host = $_SERVER['HTTP_HOST'];
+$folder = dirname($_SERVER['SCRIPT_NAME']);
+$folder = ($folder == '/' || $folder == '\\') ? '' : $folder;
+$config['base_url'] = $protocol . '://' . $host . $folder . '/';
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +57,7 @@ $config['index_page'] = '';
 |
 | WARNING: If you set this to 'PATH_INFO', URIs will always be URL-decoded!
 */
-$config['uri_protocol']    = 'REQUEST_URI';
+$config['uri_protocol']    = 'AUTO';
 
 /*
 |--------------------------------------------------------------------------
