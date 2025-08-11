@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOY_PATH=/home/sewx2253/public_html/app
+    - export DEPLOY_PATH=/home/sewx2253/public_html/app.sewaambulaneindonesia24jam.com
     - echo "🧹 Membersihkan folder lama..."
     - /bin/rm -rf $DEPLOY_PATH/*
     - /bin/rm -rf $DEPLOY_PATH/.[!.]*
@@ -10,7 +10,7 @@ deployment:
     - echo "📦 Menyalin file baru ke $DEPLOY_PATH..."
     - /bin/cp -rf ./* $DEPLOY_PATH
     - /bin/cp -rf ./.[!.]* $DEPLOY_PATH 2>/dev/null || echo "ℹ️ Tidak ada file tersembunyi (seperti .htaccess)"
-    - echo "✅ Deploy selesai! File telah disalin ke /public_html/app"
+    - echo "✅ Deploy selesai! File telah disalin ke /public_html/app.sewaambulaneindonesia24jam.com"
 
     - echo "🔧 Setel izin file yang aman..."
     - /bin/chmod -R 644 $DEPLOY_PATH
