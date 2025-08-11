@@ -9,7 +9,7 @@
     RewriteBase /
 
     # Jika website di subfolder (opsional), aktifkan baris ini:
-    # RewriteBase /app.sewaambulaneindonesia24jam.com/
+    RewriteBase /app.sewaambulaneindonesia24jam.com/
 
     # Jangan rewrite jika file/folder benar-benar ada (assets, js, css, dll)
     RewriteCond %{REQUEST_FILENAME} !-f
