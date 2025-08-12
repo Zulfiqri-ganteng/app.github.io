@@ -193,6 +193,19 @@
             "retina_detect": true
         });
     </script>
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function(e) {
+            // Ganti tipe input password
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            // Ganti ikon mata
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+    </script>
 <?php endif; ?>
 
 </body>

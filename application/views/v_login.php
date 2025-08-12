@@ -10,18 +10,19 @@
                     <?= $this->session->flashdata('message'); ?>
 
                     <form action="<?= base_url('auth'); ?>" method="post">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-                            <label for="username" class="text-dark">Username</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" name="username" placeholder="Username" required>
                         </div>
-                        <div class="form-floating mb-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                            <label for="password" class="text-dark">Password</label>
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
                         </div>
                         <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-light btn-lg text-primary fw-bold">
-                                <i class="fas fa-sign-in-alt me-2"></i>Login
-                            </button>
+                            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-sign-in-alt me-2"></i>Login</button>
                         </div>
                     </form>
 
