@@ -26,7 +26,7 @@
                     </form>
 
                 </div>
-                <a href="https://sewaambulaneindonesia24jam.com" class="btn btn-primary">
+                <a href="https://app.sewaambulaneindonesia24jam.com" class="btn btn-primary">
                     <i class="fas fa-home"></i> Kembali ke Website
                 </a>
             </div>

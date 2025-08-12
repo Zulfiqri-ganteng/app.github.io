@@ -83,9 +83,8 @@
         </a>
         <div id="collapsePengaturan" class="collapse" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#"><i class="fas fa-user-edit fa-fw me-2"></i> Profil Admin</a>
-                <a class="collapse-item" href="#"><i class="fas fa-key fa-fw me-2"></i> Ganti Password</a>
-                <a class="collapse-item" href="#"><i class="fas fa-database fa-fw me-2"></i> Backup Database</a>
+                <a class="collapse-item" href="<?= base_url('admin/profil'); ?>"><i class="fas fa-user-edit fa-fw me-2"></i> Profil & Password</a>
+                <a class="collapse-item" href="<?= base_url('admin/backup'); ?>" onclick="return confirm('Anda akan mengunduh backup database. Lanjutkan?')"><i class="fas fa-database fa-fw me-2"></i> Backup Database</a>
                 <a class="collapse-item" href="#"><i class="fas fa-cog fa-fw me-2"></i> Pengaturan Web</a>
             </div>
         </div>
