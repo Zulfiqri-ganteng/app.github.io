@@ -2,7 +2,24 @@
 deployment:
   tasks:
     - export TARGET=/home/sewx2253/public_html/app.sewaambulaneindonesia24jam.com
+
+    # Hapus semua isi target (termasuk file tersembunyi)
     - /bin/rm -rf $TARGET/*
-    - /bin/rm -rf $TARGET/.[!.]*
-    - /bin/cp -rf ./* $TARGET
-    - /bin/cp -rf ./.[!.]* $TARGET 2>/dev/null || echo "Tidak ada file tersembunyi (.htaccess, dll)"
+    - /bin/rm -rf $TARGET/.* 2>/dev/null || echo "Tidak ada file tersembunyi untuk dihapus"
+
+    # Pastikan folder target ada
+    - /bin/mkdir -p $TARGET
+
+    # Salin semua file dan folder (termasuk yang tersembunyi) secara rekursif
+    - /bin/cp -Rf ./* $TARGET/ || echo "Salin file utama selesai"
+    - /bin/cp -Rf ./.??* $TARGET/ 2>/dev/null || echo "Salin file/folder tersembunyi (seperti .htaccess) selesai"
+
+    # Set izin folder upload agar bisa menulis
+    - /bin/chmod -R 755 $TARGET/assets
+    - /bin/chmod -R 777 $TARGET/assets/images 2>/dev/null || echo "Izin upload disetel"
+
+    # Opsional: set owner (hanya jika diperlukan oleh server)
+    # - /bin/chown -R sewx2253:sewx2253 $TARGET
+
+    # Log selesai
+    - echo "✅ Deploy berhasil! Semua file dan folder termasuk yang baru telah disalin."
