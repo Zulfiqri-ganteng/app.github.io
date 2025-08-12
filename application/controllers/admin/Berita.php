@@ -21,7 +21,7 @@ class Berita extends CI_Controller
         $keyword = $this->input->get('keyword');
 
         $config['base_url'] = base_url('admin/berita/index');
-        $config['total_rows'] = $this->M_Berita->count_all_berita($keyword);
+        $config['total_rows'] = $this->M_Berita->count_all_berita_admin($keyword);
         $config['per_page'] = 5;
         $config['reuse_query_string'] = TRUE;
         // ... (Styling pagination bisa ditambahkan di sini) ...
