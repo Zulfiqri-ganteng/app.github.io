@@ -28,7 +28,7 @@
 
                     <div class="text-center mt-3">
                         <a href="<?= base_url('home'); ?>" class="text-white" style="text-decoration: none;">
-                            <i class="fas fa-arrow-left me-1"></i> Kembali ke Website
+                            <i class="fas fa-home me-1"></i> Kembali ke Website
                         </a>
                     </div>
 
