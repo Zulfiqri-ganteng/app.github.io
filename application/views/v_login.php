@@ -24,18 +24,22 @@
                         <div class="d-grid mt-4">
                             <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-sign-in-alt me-2"></i>Login</button>
                         </div>
+                        <p class="text-muted small mt-2">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Catatan: Siswa menggunakan NISN & guru NIP sebagai username, dan password default adalah tanggal lahir (DDMMYYYY). Contoh: 01012001 untuk 1 Januari 2001.
+                            pastikan Anda mengganti password setelah login pertama kali.
+                        </p>
                     </form>
 
                     <div class="text-center mt-3">
                         <a href="<?= base_url('home'); ?>" class="text-white" style="text-decoration: none;">
                             <i class="fas fa-home me-1"></i> Kembali ke Website
                         </a>
+
                     </div>
 
                 </div>
-                <a href="https://app.sewaambulaneindonesia24jam.com" class="btn btn-primary">
-                    <i class="fas fa-home"></i> Kembali ke Website
-                </a>
+
             </div>
         </div>
     </div>
