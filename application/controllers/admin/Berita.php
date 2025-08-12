@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-require_once FCPATH . 'vendor/autoload.php';
 
 class Berita extends CI_Controller
 {
@@ -21,11 +20,32 @@ class Berita extends CI_Controller
         $data['judul'] = 'Manajemen Berita';
         $keyword = $this->input->get('keyword');
 
+        // Konfigurasi Pagination
         $config['base_url'] = base_url('admin/berita/index');
         $config['total_rows'] = $this->M_Berita->count_all_berita_admin($keyword);
         $config['per_page'] = 5;
         $config['reuse_query_string'] = TRUE;
-        // ... (Styling pagination Anda) ...
+
+        // Styling Pagination (opsional)
+        $config['full_tag_open'] = '<nav><ul class="pagination justify-content-end">';
+        $config['full_tag_close'] = '</ul></nav>';
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<li class="page-item">';
+        $config['first_tag_close'] = '</li>';
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<li class="page-item">';
+        $config['last_tag_close'] = '</li>';
+        $config['next_link'] = '&raquo';
+        $config['next_tag_open'] = '<li class="page-item">';
+        $config['next_tag_close'] = '</li>';
+        $config['prev_link'] = '&laquo';
+        $config['prev_tag_open'] = '<li class="page-item">';
+        $config['prev_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
+        $config['attributes'] = array('class' => 'page-link');
 
         $this->pagination->initialize($config);
         $data['start'] = $this->uri->segment(4);
@@ -42,7 +62,6 @@ class Berita extends CI_Controller
     {
         $data['judul'] = 'Tulis Berita Baru';
         $this->form_validation->set_rules('judul_berita', 'Judul Berita', 'required');
-        $this->form_validation->set_rules('isi_berita', 'Isi Berita', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header_admin', $data);
@@ -50,7 +69,7 @@ class Berita extends CI_Controller
             $this->load->view('backend/admin/v_berita_form', $data);
             $this->load->view('templates/footer_admin');
         } else {
-            $gambar_berita = $this->_upload_gambar(); // Panggil fungsi upload
+            $gambar_berita = $this->_upload_gambar();
 
             $data_insert = [
                 'judul_berita'  => $this->input->post('judul_berita'),
@@ -81,10 +100,8 @@ class Berita extends CI_Controller
             $this->load->view('templates/footer_admin');
         } else {
             $gambar_berita = $this->input->post('gambar_lama');
-            // Cek jika ada file baru yang diupload
             if (!empty($_FILES['gambar_berita']['name'])) {
                 $gambar_berita_baru = $this->_upload_gambar();
-                // Jika upload berhasil, hapus gambar lama & gunakan yang baru
                 if ($gambar_berita_baru && $gambar_berita_baru != 'default.jpg') {
                     if ($gambar_berita != 'default.jpg') {
                         @unlink(FCPATH . 'assets/images/berita/' . $gambar_berita);
@@ -122,6 +139,7 @@ class Berita extends CI_Controller
     {
         $config['upload_path']   = './assets/images/berita/';
         $config['allowed_types'] = 'jpg|png|jpeg|gif';
+        $config['max_size']      = 2048; // 2MB
         $config['encrypt_name']  = TRUE;
         $this->upload->initialize($config);
 

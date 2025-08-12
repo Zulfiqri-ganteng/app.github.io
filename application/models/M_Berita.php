@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_Berita extends CI_Model
 {
-
     private $table = 'berita';
 
     /**
@@ -13,25 +12,23 @@ class M_Berita extends CI_Model
      * @param string $keyword Kata kunci untuk pencarian.
      * @return array
      */
-    public function get_berita($limit = null, $start = null, $keyword = null)
+    public function get_berita_admin($limit, $start, $keyword = null)
     {
         if ($keyword) {
             $this->db->like('judul_berita', $keyword);
+            $this->db->or_like('kategori', $keyword);
         }
-        if ($limit) {
-            $this->db->limit($limit, $start);
-        }
+        $this->db->limit($limit, $start);
         $this->db->order_by('tanggal_publish', 'DESC');
         return $this->db->get($this->table)->result_array();
     }
-
 
     /**
      * Menghitung total semua berita untuk pagination di panel admin.
      * @param string $keyword Kata kunci untuk pencarian agar pagination akurat.
      * @return int
      */
-    public function count_all_berita($keyword = null)
+    public function count_all_berita_admin($keyword = null)
     {
         if ($keyword) {
             $this->db->like('judul_berita', $keyword);
@@ -80,10 +77,6 @@ class M_Berita extends CI_Model
     {
         return $this->db->delete($this->table, ['id' => $id]);
     }
-
-    // =======================================================
-    // FUNGSI UNTUK TAMPILAN DEPAN (FRONTEND) & DASHBOARD
-    // =======================================================
 
     /**
      * Mengambil berita terbaru untuk ditampilkan di halaman utama.
