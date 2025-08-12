@@ -52,6 +52,7 @@
                 <a class="collapse-item" href="<?= base_url('admin/pengumuman'); ?>">Pengumuman</a>
                 <a class="collapse-item" href="<?= base_url('admin/gallery'); ?>">Gallery</a>
                 <a class="collapse-item" href="<?= base_url('admin/ebook'); ?>">E-Book</a>
+                <a class="collapse-item" href="#"><i class="fas fa-newspaper fa-fw me-2"></i> Berita</a>
             </div>
         </div>
     </li>

@@ -10,6 +10,7 @@ class Home extends CI_Controller
         $this->load->model('M_Siswa');
         $this->load->model('M_Guru');
         $this->load->model('M_Pengumuman');
+        $this->load->model('M_Berita');
     }
 
     public function index()
@@ -27,6 +28,7 @@ class Home extends CI_Controller
 
         // Mengambil data pengumuman terbaru (TAMBAHAN BARU)
         $data['pengumuman_terbaru'] = $this->M_Pengumuman->get_pengumuman_terbaru(3);
+        $data['berita_terbaru'] = $this->M_Berita->get_all_berita(3); // Ambil 3 berita terbaru
 
         // Memuat view dan mengirim semua data
         $this->load->view('templates/header', $data);

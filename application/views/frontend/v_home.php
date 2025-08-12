@@ -56,6 +56,50 @@
             </div>
         </div>
     </section>
+
+    <section class="py-5 section-bg">
+        <div class="container">
+            <h2 class="text-center section-title">Jurusan Unggulan</h2>
+            <div class="row text-center">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 p-4 jurusan-card">
+                        <div class="icon"><i class="fas fa-laptop-code"></i></div>
+                        <h4 class="fw-bold">Teknik Komputer & Jaringan (TKJ)</h4>
+                        <p class="text-muted">Mempelajari perakitan, instalasi, dan perbaikan komputer serta administrasi jaringan.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 p-4 jurusan-card">
+                        <div class="icon"><i class="fas fa-camera-retro"></i></div>
+                        <h4 class="fw-bold">Desain Komunikasi Visuak (DKV)</h4>
+                        <p class="text-muted">Mengembangkan kreativitas dalam desain grafis, animasi, dan produksi video.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 p-4 jurusan-card">
+                        <div class="icon"><i class="fas fa-cash-register"></i></div>
+                        <h4 class="fw-bold">Akuntansi & Keuangan Lembaga (AKL)</h4>
+                        <p class="text-muted">Menyiapkan tenaga profesional di bidang pembukuan, perpajakan, dan manajemen keuangan.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 p-4 jurusan-card">
+                        <div class="icon"><i class="fas fa-briefcase"></i></div>
+                        <h4 class="fw-bold">Manajemen Perkantoran (MP)</h4>
+                        <p class="text-muted">Mempelajari administrasi, pengarsipan, dan teknologi untuk operasional kantor modern.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 p-4 jurusan-card">
+                        <div class="icon"><i class="fas fa-pills"></i></div>
+                        <h4 class="fw-bold">Farmasi</h4>
+                        <p class="text-muted">Mendidik calon asisten tenaga kefarmasian yang kompeten di bidang pelayanan farmasi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <section id="prestasi" class="prestasi-section py-5" style="background-color: #f8f9fa;">
         <div class="container">
 
@@ -101,50 +145,32 @@
 
         </div>
     </section>
-    <section class="py-5 section-bg">
-        <div class="container">
-            <h2 class="text-center section-title">Jurusan Unggulan</h2>
-            <div class="row text-center">
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 p-4 jurusan-card">
-                        <div class="icon"><i class="fas fa-laptop-code"></i></div>
-                        <h4 class="fw-bold">Teknik Komputer & Jaringan (TKJ)</h4>
-                        <p class="text-muted">Mempelajari perakitan, instalasi, dan perbaikan komputer serta administrasi jaringan.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 p-4 jurusan-card">
-                        <div class="icon"><i class="fas fa-camera-retro"></i></div>
-                        <h4 class="fw-bold">Desain Komunikasi Visuak (DKV)</h4>
-                        <p class="text-muted">Mengembangkan kreativitas dalam desain grafis, animasi, dan produksi video.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 p-4 jurusan-card">
-                        <div class="icon"><i class="fas fa-cash-register"></i></div>
-                        <h4 class="fw-bold">Akuntansi & Keuangan Lembaga (AKL)</h4>
-                        <p class="text-muted">Menyiapkan tenaga profesional di bidang pembukuan, perpajakan, dan manajemen keuangan.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 p-4 jurusan-card">
-                        <div class="icon"><i class="fas fa-briefcase"></i></div>
-                        <h4 class="fw-bold">Manajemen Perkantoran (MP)</h4>
-                        <p class="text-muted">Mempelajari administrasi, pengarsipan, dan teknologi untuk operasional kantor modern.</p>
-                    </div>
-                </div>
 
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 p-4 jurusan-card">
-                        <div class="icon"><i class="fas fa-pills"></i></div>
-                        <h4 class="fw-bold">Farmasi</h4>
-                        <p class="text-muted">Mendidik calon asisten tenaga kefarmasian yang kompeten di bidang pelayanan farmasi.</p>
-                    </div>
-                </div>
+    <!-- ini adalah bagian berita -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Berita & Informasi Terkini</h2>
+            <div class="row">
+                <?php if (!empty($berita_terbaru)): foreach ($berita_terbaru as $b): ?>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <img src="<?= base_url('assets/images/berita/' . $b['gambar_berita']); ?>" class="card-img-top" style="height: 200px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?= $b['judul_berita']; ?></h5>
+                                    <small class="text-muted"><i class="fas fa-calendar-alt me-2"></i><?= date('d F Y', strtotime($b['tanggal_publish'])); ?></small>
+                                    <p class="card-text mt-2"><?= word_limiter($b['isi_berita'], 20); ?></p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="#" class="btn btn-primary">Baca Selengkapnya</a>
+                                </div>
+                            </div>
+                        </div>
+                <?php endforeach;
+                endif; ?>
             </div>
         </div>
     </section>
-
+<!-- bagian berita ahir -->
     <section id="pengumuman" class="pengumuman-section py-5">
         <div class="container">
 
