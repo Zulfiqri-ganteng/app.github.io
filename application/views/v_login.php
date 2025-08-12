@@ -26,8 +26,14 @@
                         </div>
                         <p class="text-muted small mt-2">
                             <i class="fas fa-info-circle me-1"></i>
-                            Catatan: Siswa menggunakan NISN & guru NIP sebagai username, dan password default adalah tanggal lahir (DDMMYYYY). Contoh: 01012001 untuk 1 Januari 2001.
-                            pastikan Anda mengganti password setelah login pertama kali.
+                            Siswa: Menggunakan NISN sebagai username, dan password default adalah tanggal lahir (DDMMYYYY). Contoh: 01012001 untuk 1 Januari 2001.
+
+                        </p>
+                        <br>
+                        <p class="text-muted small mt-2">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Guru: Menggunakan NIP sebagai username, dan password default adalah tanggal lahir (DDMMYYYY). Contoh: 01012001 untuk 1 Januari 2001.
+
                         </p>
                     </form>
 
