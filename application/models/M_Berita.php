@@ -21,7 +21,7 @@ class M_Berita extends CI_Model
         $this->db->order_by('tanggal_publish', 'DESC');
         return $this->db->get($this->table)->result_array();
     }
-    public function get_berita_admin($limit, $start, $keyword = null)
+    public function get_berita($limit, $start, $keyword = null)
     {
         if ($keyword) {
             $this->db->like('judul_berita', $keyword);
@@ -32,12 +32,13 @@ class M_Berita extends CI_Model
         return $this->db->get($this->table)->result_array();
     }
 
+
     /**
      * Menghitung total semua berita untuk pagination di panel admin.
      * @param string $keyword Kata kunci untuk pencarian agar pagination akurat.
      * @return int
      */
-    public function count_all_berita_admin($keyword = null)
+    public function count_all_berita($keyword = null)
     {
         if ($keyword) {
             $this->db->like('judul_berita', $keyword);

@@ -20,13 +20,13 @@ class Berita extends CI_Controller
         $data['judul'] = 'Manajemen Berita';
         $keyword = $this->input->get('keyword');
         $config['base_url'] = base_url('admin/berita/index');
-        $config['total_rows'] = $this->M_Berita->count_all_berita_admin($keyword);
+        $config['total_rows'] = $this->M_Berita->count_all_berita($keyword);
         $config['per_page'] = 5;
         // ... (Styling pagination bisa ditambahkan di sini) ...
 
         $this->pagination->initialize($config);
         $data['start'] = $this->uri->segment(4);
-        $data['berita'] = $this->M_Berita->get_berita_admin($config['per_page'], $data['start'], $keyword);
+        $data['berita'] = $this->M_Berita->get_berita($config['per_page'], $data['start'], $keyword);
         $data['pagination'] = $this->pagination->create_links();
 
         $this->load->view('templates/header_admin', $data);
