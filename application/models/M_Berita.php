@@ -13,21 +13,14 @@ class M_Berita extends CI_Model
      * @param string $keyword Kata kunci untuk pencarian.
      * @return array
      */
-    public function get_all_berita($limit = null)
-    {
-        if ($limit) {
-            $this->db->limit($limit);
-        }
-        $this->db->order_by('tanggal_publish', 'DESC');
-        return $this->db->get($this->table)->result_array();
-    }
-    public function get_berita($limit, $start, $keyword = null)
+    public function get_berita($limit = null, $start = null, $keyword = null)
     {
         if ($keyword) {
             $this->db->like('judul_berita', $keyword);
-            $this->db->or_like('kategori', $keyword);
         }
-        $this->db->limit($limit, $start);
+        if ($limit) {
+            $this->db->limit($limit, $start);
+        }
         $this->db->order_by('tanggal_publish', 'DESC');
         return $this->db->get($this->table)->result_array();
     }
