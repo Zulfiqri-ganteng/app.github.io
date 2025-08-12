@@ -12,16 +12,16 @@ class Dashboard extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak punya akses ke halaman ini!</div>');
             redirect('auth');
         }
+        // Muat semua model yang dibutuhkan di sini
+        $this->load->model('M_Pengunjung');
+        $this->load->model('M_Berita');
     }
 
     public function index()
     {
         $data['judul'] = 'Dashboard Admin';
-        // Load model pengunjung
-        $this->load->model('M_Pengunjung');
-        $this->load->model('M_Berita');
 
-        // Mengambil data untuk statistik
+        // Mengambil semua data statistik
         $data['jumlah_guru'] = $this->db->count_all('guru');
         $data['jumlah_siswa'] = $this->db->count_all('siswa');
         $data['jumlah_pengumuman'] = $this->db->count_all('pengumuman');
@@ -30,12 +30,13 @@ class Dashboard extends CI_Controller
         $data['jumlah_gallery'] = $this->db->count_all('gallery');
         $data['top_berita'] = $this->M_Berita->get_top_berita();
 
+        // Memuat semua view
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar_admin', $data);
-        $this->load->view('backend/admin/v_dashboard', $data); // Buat view ini
+        $this->load->view('backend/admin/v_dashboard', $data);
         $this->load->view('templates/footer_admin');
-        $data['top_berita'] = $this->M_Berita->get_top_berita();
     }
+
     public function search()
     {
         $data['judul'] = 'Hasil Pencarian';
