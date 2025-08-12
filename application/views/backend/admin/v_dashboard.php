@@ -92,6 +92,28 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-lg-7">
+            </div>
+            <div class="col-lg-5">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-fire me-2"></i>Berita Paling Banyak Dilihat</h6>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <?php foreach ($top_berita as $tb): ?>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <?= word_limiter($tb['judul_berita'], 5); ?>
+                                    <span class="badge bg-primary rounded-pill"><?= $tb['views']; ?> views</span>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>

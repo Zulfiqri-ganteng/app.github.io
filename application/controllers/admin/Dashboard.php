@@ -32,6 +32,8 @@ class Dashboard extends CI_Controller
         $this->load->view('templates/sidebar_admin', $data);
         $this->load->view('backend/admin/v_dashboard', $data); // Buat view ini
         $this->load->view('templates/footer_admin');
+        $this->load->model('M_Berita');
+        $data['top_berita'] = $this->M_Berita->get_top_berita();
     }
     public function search()
     {
