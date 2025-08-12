@@ -5,7 +5,7 @@
                 <div class="card-body p-5 text-center">
 
                     <img src="<?= base_url('assets/images/logo.png'); ?>" alt="Logo Sekolah" width="80" class="mb-4">
-                    <h3 class="fw-bold mb-4">Halaman Login</h3>
+                    <h3 class="fw-bold mb-4">Login Area</h3>
 
                     <?= $this->session->flashdata('message'); ?>
 
@@ -24,10 +24,11 @@
                             </button>
                         </div>
                     </form>
-                    <a href="https://sewaambulaneindonesia24jam.com" class="btn btn-primary">
-                        <i class="fas fa-home"></i> Kembali ke Website
-                    </a>
+
                 </div>
+                <a href="https://sewaambulaneindonesia24jam.com" class="btn btn-primary">
+                    <i class="fas fa-home"></i> Kembali ke Website
+                </a>
             </div>
         </div>
     </div>
