@@ -26,6 +26,12 @@
                         </div>
                     </form>
 
+                    <div class="text-center mt-3">
+                        <a href="<?= base_url('home'); ?>" class="text-white" style="text-decoration: none;">
+                            <i class="fas fa-arrow-left me-1"></i> Kembali ke Website
+                        </a>
+                    </div>
+
                 </div>
                 <a href="https://app.sewaambulaneindonesia24jam.com" class="btn btn-primary">
                     <i class="fas fa-home"></i> Kembali ke Website
