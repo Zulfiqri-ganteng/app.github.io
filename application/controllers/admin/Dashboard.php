@@ -19,6 +19,7 @@ class Dashboard extends CI_Controller
         $data['judul'] = 'Dashboard Admin';
         // Load model pengunjung
         $this->load->model('M_Pengunjung');
+        $this->load->model('M_Berita');
 
         // Mengambil data untuk statistik
         $data['jumlah_guru'] = $this->db->count_all('guru');
@@ -27,6 +28,7 @@ class Dashboard extends CI_Controller
         $data['pengunjung_hari_ini'] = $this->M_Pengunjung->get_pengunjung_hari_ini();
         $data['total_pengunjung'] = $this->M_Pengunjung->get_total_pengunjung();
         $data['jumlah_gallery'] = $this->db->count_all('gallery');
+        $data['top_berita'] = $this->M_Berita->get_top_berita();
 
         $this->load->view('templates/header_admin', $data);
         $this->load->view('templates/sidebar_admin', $data);
