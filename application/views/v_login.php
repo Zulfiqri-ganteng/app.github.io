@@ -5,7 +5,7 @@
                 <div class="card-body p-5 text-center">
 
                     <img src="<?= base_url('assets/images/logo.png'); ?>" alt="Logo Sekolah" width="80" class="mb-4">
-                    <h3 class="fw-bold mb-4">LOGIN AREA</h3>
+                    <h3 class="fw-bold mb-4">Halaman Login</h3>
 
                     <?= $this->session->flashdata('message'); ?>
 
