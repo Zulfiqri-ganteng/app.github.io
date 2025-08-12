@@ -27,7 +27,9 @@
                                 <td><?= $b['kategori']; ?></td>
                                 <td><?= date('d M Y', strtotime($b['tanggal_publish'])); ?></td>
                                 <td>
-                                    <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                    <a href="<?= site_url('admin/Berita/edit/' . $berita['id']) ?>" class="btn btn-warning">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
                                     <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
