@@ -7,30 +7,28 @@ class Home extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('M_Siswa');
-        $this->load->model('M_Guru');
         $this->load->model('M_Pengumuman');
+        $this->load->model('M_Guru');
+        $this->load->model('M_Siswa');
         $this->load->model('M_Berita');
     }
 
     public function index()
     {
-        // Memuat model yang kita butuhkan
-        $this->load->model('M_Siswa');
-        $this->load->model('M_Guru');
-        $this->load->model('M_Pengumuman');
+        $this->load->driver('cache', array('adapter' => 'file'));
 
-        // Menyiapkan data untuk dikirim ke view
-        $data['judul'] = 'Selamat Datang';
+        // Coba ambil data dari cache
+        if (! $data = $this->cache->get('halaman_utama')) {
+            // Jika tidak ada cache, ambil data baru dari database
+            $data['judul'] = 'Selamat Datang';
+            $data['pengumuman_terbaru'] = $this->M_Pengumuman->get_all_pengumuman(3); // Ambil 3 pengumuman
+            $data['guru_beranda'] = $this->M_Guru->get_all_guru(4); // Ambil 4 guru
+            $data['berita_terbaru'] = $this->M_Berita->get_berita_terbaru(3); // Ambil 3 berita
 
-        // Mengambil data siswa berprestasi
-        $data['siswa_berprestasi'] = $this->M_Siswa->get_siswa_berprestasi(3);
+            // Simpan data ke cache selama 5 menit (300 detik)
+            $this->cache->save('halaman_utama', $data, 300);
+        }
 
-        // Mengambil data pengumuman terbaru (TAMBAHAN BARU)
-        $data['pengumuman_terbaru'] = $this->M_Pengumuman->get_pengumuman_terbaru(3);
-        $data['berita_terbaru'] = $this->M_Berita->get_all_berita(3); // Ambil 3 berita terbaru
-
-        // Memuat view dan mengirim semua data
         $this->load->view('templates/header', $data);
         $this->load->view('frontend/v_home', $data);
         $this->load->view('templates/footer');
