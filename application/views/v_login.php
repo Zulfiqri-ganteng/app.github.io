@@ -26,7 +26,7 @@
                         </div>
                         <p class="text-muted small mt-2">
                             <i class="fas fa-info-circle me-1"></i>
-                            Siswa: Menggunakan NISN/NIP sebagai username, dan password default (DDYYMM) sesuai tanggal lahir.
+                            Menggunakan NISN/NIP sebagai username, dan password default (DDYYMM) sesuai tanggal lahir.
 
                         </p>
 
