@@ -49,10 +49,12 @@
         </a>
         <div id="collapseKonten" class="collapse" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<?= base_url('admin/pengumuman'); ?><i class=" fa fa-info-circle"></i> Pengumuman</a>
-                <a class="collapse-item" href="<?= base_url('admin/gallery'); ?><i class=" fa fa-file-image-o"></i> Gallery</a>
+                <!-- <a href="admin/pengumuman" title="Manajemen Pengumuman"><i class="fas fa-bullhorn"></i> Pengumuman</a> -->
+                <a class="collapse-item" href="<?= base_url('admin/pengumuman'); ?>"><i class="fas fa-bullhorn"></i> Pengumuman</a>
                 <a class="collapse-item" href="<?= base_url('admin/ebook'); ?>"><i class="fa fa-book" aria-hidden="true"></i> E-Book</a>
                 <a class="collapse-item" href="<?= base_url('admin/berita'); ?>"><i class="fas fa-newspaper fa-fw me-2"></i> Berita</a>
+                <a class="collapse-item" href="<?= base_url('admin/gallery'); ?>"><i class="fas fa-book fa-fw me-2"></i> gallery</a>
+
             </div>
         </div>
     </li>
