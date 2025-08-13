@@ -13,7 +13,7 @@ class Siswa_web extends CI_Controller {
         
         // Mengambil data siswa yang ditandai sebagai 'terbaik' atau 'juara'
         // Sesuaikan nama fungsi jika berbeda di model M_Siswa Anda
-        $data['siswa_terbaik'] = $this->M_Siswa->get_siswa_terbaik();
+        $data['siswa_terbaik'] = $this->M_Siswa->get_siswa_berprestasi();
         
         $this->load->view('templates/header', $data);
         $this->load->view('frontend/v_siswa', $data);

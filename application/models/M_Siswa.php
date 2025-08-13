@@ -41,6 +41,7 @@ class M_Siswa extends CI_Model
         }
     }
 
+
     /**
      * Mengambil satu data siswa berdasarkan ID.
      * @param int $id ID siswa.
