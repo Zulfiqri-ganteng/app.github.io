@@ -19,7 +19,7 @@ class Berita extends CI_Controller
     {
         $data['judul'] = 'Manajemen Berita';
         $keyword = $this->input->get('keyword');
-
+        $data['berita_terbaru'] = $this->M_Berita->get_berita_terbaru(5); // Ambil 5 berita terbaru
         // Konfigurasi Pagination
         $config['base_url'] = base_url('admin/berita/index');
         $config['total_rows'] = $this->M_Berita->count_all_berita_admin($keyword);
@@ -150,27 +150,29 @@ class Berita extends CI_Controller
     }
     public function detail($id)
     {
-        // Validasi ID
         if (!is_numeric($id)) {
             show_404();
         }
 
-        // Ambil data berita dari model
         $berita = $this->M_Berita->get_berita_by_id($id);
 
-        // Jika berita tidak ditemukan
         if (!$berita) {
             show_404();
         }
 
-        // Tambahkan views (dibulatkan ke bawah)
+        // Tambah jumlah dilihat
         $this->M_Berita->increment_views($id);
 
-        // Siapkan data untuk view
+        // Ambil nama penulis (jika ada relasi)
+        $penulis = null;
+        if (!empty($berita['penulis_id'])) {
+            $penulis = $this->M_User->get_user_by_id($berita['penulis_id']);
+        }
+
         $data['judul'] = $berita['judul_berita'];
         $data['berita'] = $berita;
+        $data['penulis'] = $penulis ? $penulis['nama'] : 'Admin';
 
-        // Load view
         $this->load->view('templates/header', $data);
         $this->load->view('frontend/v_berita_detail', $data);
         $this->load->view('templates/footer');

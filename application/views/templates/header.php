@@ -51,27 +51,6 @@
             /* Sembunyikan navbar di halaman login */
         }
 
-        .hero-caption {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 50px;
-        }
-
-        .student-card:hover {
-            transform: translateY(-5px);
-            transition: 0.3s ease;
-        }
-
-        #hero {
-            height: 70vh;
-            overflow: hidden;
-        }
-
-        #hero img {
-            height: 100%;
-            object-fit: cover;
-        }
 
         <?php endif; ?>
     </style>

@@ -44,7 +44,21 @@ class M_Berita extends CI_Model
      */
     public function get_berita_by_id($id)
     {
-        return $this->db->get_where($this->table, ['id' => $id])->row_array();
+        $this->db->where('id', $id);
+        $query = $this->db->get($this->table);
+        return $query->row_array();
+    }
+
+    /**
+     * Tambah jumlah dilihat (views)
+     * @param int $id
+     * @return bool
+     */
+    public function increment_views($id)
+    {
+        $this->db->set('views', 'views+1', FALSE);
+        $this->db->where('id', $id);
+        return $this->db->update($this->table);
     }
 
     /**
