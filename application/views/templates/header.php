@@ -51,6 +51,53 @@
             /* Sembunyikan navbar di halaman login */
         }
 
+        .student-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 350px;
+        }
+
+        .student-card__image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .student-card:hover .student-card__image {
+            transform: scale(1.1);
+        }
+
+        .student-card__overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        .student-card__title {
+            font-weight: bold;
+        }
+
+        .student-card__badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #FFD700;
+            /* Emas */
+            color: #0A2647;
+            /* Biru Navy */
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
         <?php endif; ?>
     </style>
 </head>
