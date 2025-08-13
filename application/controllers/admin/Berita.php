@@ -148,4 +148,31 @@ class Berita extends CI_Controller
         }
         return 'default.jpg';
     }
+    public function detail($id)
+    {
+        // Validasi ID
+        if (!is_numeric($id)) {
+            show_404();
+        }
+
+        // Ambil data berita dari model
+        $berita = $this->M_Berita->get_berita_by_id($id);
+
+        // Jika berita tidak ditemukan
+        if (!$berita) {
+            show_404();
+        }
+
+        // Tambahkan views (dibulatkan ke bawah)
+        $this->M_Berita->increment_views($id);
+
+        // Siapkan data untuk view
+        $data['judul'] = $berita['judul_berita'];
+        $data['berita'] = $berita;
+
+        // Load view
+        $this->load->view('templates/header', $data);
+        $this->load->view('frontend/v_berita_detail', $data);
+        $this->load->view('templates/footer');
+    }
 }

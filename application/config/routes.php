@@ -15,6 +15,7 @@ $route['admin/dashboard'] = 'admin/Dashboard';
 $route['admin/guru'] = 'admin/Guru';
 $route['admin/siswa'] = 'admin/Siswa';
 $route['admin/ujian/set_status/(:num)/(:any)'] = 'admin/Ujian/set_status/$1/$2';
+$route['berita/detail/(:num)'] = 'Berita/detail/$1';
 
 // (Tambahkan rute admin lainnya di sini jika perlu)
 

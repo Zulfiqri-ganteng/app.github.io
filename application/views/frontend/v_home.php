@@ -78,19 +78,20 @@
         <h2 class="text-center section-title">Siswa Berprestasi</h2>
         <div class="row justify-content-center">
             <?php if (!empty($siswa_berprestasi)): foreach ($siswa_berprestasi as $siswa): ?>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card student-card shadow">
-                    <img src="<?= base_url('assets/images/siswa/' . $siswa['foto']); ?>" class="student-card__image">
-                    <div class="student-card__overlay">
-                        <h4 class="student-card__title"><?= $siswa['nama_siswa']; ?></h4>
-                        <p class="student-card__subtitle"><?= $siswa['kelas']; ?></p>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card student-card shadow">
+                            <img src="<?= base_url('assets/images/siswa/' . $siswa['foto']); ?>" class="student-card__image">
+                            <div class="student-card__overlay">
+                                <h4 class="student-card__title"><?= $siswa['nama_siswa']; ?></h4>
+                                <p class="student-card__subtitle"><?= $siswa['kelas']; ?></p>
+                            </div>
+                            <?php if ($siswa['juara'] > 0): ?>
+                                <div class="student-card__badge"><i class="fas fa-trophy"></i> Juara <?= $siswa['juara']; ?></div>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                    <?php if ($siswa['juara'] > 0): ?>
-                        <div class="student-card__badge"><i class="fas fa-trophy"></i> Juara <?= $siswa['juara']; ?></div>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <?php endforeach; else: ?>
+                <?php endforeach;
+            else: ?>
                 <p class="text-center text-muted">Belum ada data siswa berprestasi untuk ditampilkan.</p>
             <?php endif; ?>
         </div>
@@ -103,35 +104,37 @@
             <div class="col-lg-8">
                 <h2 class="section-title">Berita Terkini</h2>
                 <div class="row">
-                    <?php if(!empty($berita_terbaru)): foreach($berita_terbaru as $b): ?>
-                    <div class="col-md-6 mb-4">
-                        <div class="card h-100 shadow-sm">
-                            <img src="<?= base_url('assets/images/berita/' . $b['gambar_berita']); ?>" class="card-img-top" style="height: 200px; object-fit: cover;">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title"><?= $b['judul_berita']; ?></h5>
-                                <small class="text-muted mb-2"><i class="fas fa-calendar-alt me-2"></i><?= date('d M Y', strtotime($b['tanggal_publish'])); ?></small>
-                                <p class="card-text flex-grow-1"><?= word_limiter($b['isi_berita'], 15); ?></p>
-                                <a href="#" class="btn btn-primary mt-auto align-self-start">Baca Selengkapnya</a>
+                    <?php if (!empty($berita_terbaru)): foreach ($berita_terbaru as $b): ?>
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 shadow-sm">
+                                    <img src="<?= base_url('assets/images/berita/' . $b['gambar_berita']); ?>" class="card-img-top" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title"><?= $b['judul_berita']; ?></h5>
+                                        <small class="text-muted mb-2"><i class="fas fa-calendar-alt me-2"></i><?= date('d M Y', strtotime($b['tanggal_publish'])); ?></small>
+                                        <p class="card-text flex-grow-1"><?= word_limiter($b['isi_berita'], 15); ?></p>
+                                        <a href="<?= base_url('berita/detail/' . $b['id']); ?>" class="btn btn-sm btn-primary">Baca Selengkapnya</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <?php endforeach; else: ?>
-                    <p class="text-muted">Belum ada berita terbaru.</p>
+                        <?php endforeach;
+                    else: ?>
+                        <p class="text-muted">Belum ada berita terbaru.</p>
                     <?php endif; ?>
                 </div>
             </div>
             <div class="col-lg-4 mt-4 mt-lg-0">
                 <h2 class="section-title">Pengumuman</h2>
                 <div class="list-group">
-                    <?php if(!empty($pengumuman_terbaru)): foreach($pengumuman_terbaru as $p): ?>
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1"><?= $p['judul']; ?></h6>
-                        </div>
-                        <small class="text-muted"><?= date('d F Y', strtotime($p['tanggal'])); ?></small>
-                    </a>
-                    <?php endforeach; else: ?>
-                    <p class="text-muted">Belum ada pengumuman terbaru.</p>
+                    <?php if (!empty($pengumuman_terbaru)): foreach ($pengumuman_terbaru as $p): ?>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1"><?= $p['judul']; ?></h6>
+                                </div>
+                                <small class="text-muted"><?= date('d F Y', strtotime($p['tanggal'])); ?></small>
+                            </a>
+                        <?php endforeach;
+                    else: ?>
+                        <p class="text-muted">Belum ada pengumuman terbaru.</p>
                     <?php endif; ?>
                 </div>
             </div>

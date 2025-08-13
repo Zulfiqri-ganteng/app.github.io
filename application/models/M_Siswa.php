@@ -92,4 +92,10 @@ class M_Siswa extends CI_Model
     {
         return $this->db->get_where('siswa', ['kelas' => $kode_kelas])->result_array();
     }
+    public function increment_views($id)
+    {
+        $this->db->set('views', 'views+1', FALSE);
+        $this->db->where('id', $id);
+        return $this->db->update($this->table);
+    }
 }
