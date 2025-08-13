@@ -26,19 +26,12 @@ class M_Siswa extends CI_Model
      * @return array
      */
     // Ganti fungsi lama Anda (get_siswa_terbaik) dengan fungsi yang benar ini
-    public function get_siswa_berprestasi($limit = 3)
+    public function get_siswa_berprestasi($limit = 4)
     {
-        $this->db->where('juara >', 0); // Menggunakan kolom 'juara' yang baru
-        $this->db->limit($limit);
+        $this->db->where('juara >', 0); // Ambil siswa yang memiliki peringkat juara
         $this->db->order_by('juara', 'ASC'); // Urutkan dari Juara 1, 2, 3
-
-        // Tambahkan pengecekan sebelum return
-        $query = $this->db->get('siswa');
-        if ($query) {
-            return $query->result_array();
-        } else {
-            return false; // Return false jika query gagal
-        }
+        $this->db->limit($limit);
+        return $this->db->get('siswa')->result_array();
     }
 
 

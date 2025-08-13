@@ -17,16 +17,15 @@ class Home extends CI_Controller
     {
         $this->load->driver('cache', array('adapter' => 'file'));
 
-        // Coba ambil data dari cache
-        if (! $data = $this->cache->get('halaman_utama')) {
-            // Jika tidak ada cache, ambil data baru dari database
-            $data['judul'] = 'Selamat Datang';
-            $data['pengumuman_terbaru'] = $this->M_Pengumuman->get_all_pengumuman(3); // Ambil 3 pengumuman
-            $data['guru_beranda'] = $this->M_Guru->get_all_guru(4); // Ambil 4 guru
-            $data['berita_terbaru'] = $this->M_Berita->get_berita_terbaru(3); // Ambil 3 berita
+        if (! $data = $this->cache->get('halaman_utama_v2')) {
 
-            // Simpan data ke cache selama 5 menit (300 detik)
-            $this->cache->save('halaman_utama', $data, 300);
+            $data['judul'] = 'Selamat Datang';
+            $data['pengumuman_terbaru'] = $this->M_Pengumuman->get_all_pengumuman(3);
+            $data['guru_beranda'] = $this->M_Guru->get_all_guru(4);
+            $data['siswa_berprestasi'] = $this->M_Siswa->get_siswa_berprestasi(3); // Panggil fungsi yang benar
+            $data['berita_terbaru'] = $this->M_Berita->get_berita_terbaru(3);
+
+            $this->cache->save('halaman_utama_v2', $data, 300); // Simpan cache 5 menit
         }
 
         $this->load->view('templates/header', $data);
