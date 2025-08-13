@@ -67,6 +67,10 @@ class M_Auth extends CI_Model
         $query = $this->db->get($this->table);
         return $query->row_array();
     }
+    public function get_user_by_username($username)
+    {
+        return $this->db->get_where('users', ['username' => $username])->row_array();
+    }
 
     /**
      * Ambil semua pengguna (opsional, untuk manajemen user)
