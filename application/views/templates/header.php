@@ -51,6 +51,55 @@
             /* Sembunyikan navbar di halaman login */
         }
 
+        /* Navbar */
+        .navbar {
+            background-color: #002147;
+            /* Warna dark blue tua */
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar-brand img {
+            max-height: 30px;
+        }
+
+        .navbar .nav-link {
+            color: white !important;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-link:hover,
+        .navbar .nav-link.active {
+            color: #FFD700;
+            /* Warna kuning emas */
+        }
+
+        .navbar .dropdown-toggle::after {
+            margin-left: 0.255em;
+            vertical-align: 0.255em;
+            content: none;
+            /* Hapus icon default */
+        }
+
+        .navbar .dropdown-toggle::before {
+            content: '\f107';
+            /* Icon caret-down dari Font Awesome */
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            margin-right: 0.25rem;
+        }
+
+        .navbar .btn-primary {
+            background-color: #FFD700;
+            /* Warna kuning emas */
+            border-color: #FFD700;
+        }
+
+        .navbar .btn-primary:hover {
+            background-color: #F7DC6F;
+            /* Warna lebih terang saat hover */
+            border-color: #F7DC6F;
+        }
+
 
         <?php endif; ?>
     </style>
