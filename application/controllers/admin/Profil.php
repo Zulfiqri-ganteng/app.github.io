@@ -8,12 +8,11 @@ class Profil extends CI_Controller
     {
         parent::__construct();
 
-        // Cek login & level admin
-        if (!$this->session->userdata('logged_in') || $this->session->userdata('level') != 'admin') {
-            redirect('auth');
+        if (!$this->session->userdata('logged_in') || $this->session->userdata('level') !== 'admin') {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger">Akses ditolak. Silakan login sebagai admin.</div>');
+            redirect('auth/login');
         }
 
-        // Muat model dan library
         $this->load->model('M_Auth');
         $this->load->library('form_validation');
     }
@@ -21,60 +20,116 @@ class Profil extends CI_Controller
     public function index()
     {
         $data['judul'] = 'Profil Admin';
-        $admin_id = $this->session->userdata('id_user');
-
-        // Ambil data admin dari M_Auth
-        $data['admin'] = $this->M_Auth->get_user_by_id($admin_id);
+        $user_id = $this->session->userdata('id_user');
+        $data['admin'] = $this->M_Auth->get_user_by_id($user_id);
 
         if (!$data['admin']) {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger">Data admin tidak ditemukan.</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger">Data pengguna tidak ditemukan.</div>');
             redirect('admin/dashboard');
         }
 
-        // Aturan validasi form ganti password
-        $this->form_validation->set_rules('password_lama', 'Password Lama', 'required|trim');
-        $this->form_validation->set_rules('password_baru', 'Password Baru', 'required|trim|min_length[8]|matches[konfirmasi_password]');
-        $this->form_validation->set_rules('konfirmasi_password', 'Konfirmasi Password', 'required|trim');
+        // Aturan validasi untuk edit profil
+        $this->form_validation->set_rules('nama_lengkap', 'Nama Lengkap', 'required|trim|max_length[100]');
+        $this->form_validation->set_rules('username', 'Username', 'required|trim|min_length[4]|max_length[30]');
 
-        if ($this->form_validation->run() == FALSE) {
-            // Tampilkan view jika validasi gagal
+        if ($this->form_validation->run() === FALSE) {
             $this->load->view('templates/header_admin', $data);
             $this->load->view('templates/sidebar_admin', $data);
             $this->load->view('backend/admin/v_profil', $data);
             $this->load->view('templates/footer_admin');
         } else {
-            // Proses update password
-            $this->update_password();
+            $this->_update_profile();
         }
     }
 
-    private function update_password()
+    private function _update_profile()
     {
-        $admin_id = $this->session->userdata('id_user');
-        $password_lama = $this->input->post('password_lama');
-        $password_baru = $this->input->post('password_baru');
+        $user_id = $this->session->userdata('id_user');
+        $input = $this->input->post(null, true);
 
-        $user = $this->M_Auth->get_user_by_id($admin_id);
-
-        if (!$user) {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger">Akun tidak ditemukan.</div>');
+        // Cek apakah username sudah dipakai orang lain
+        if ($this->M_Auth->is_username_exists($input['username'], $user_id)) {
+            $this->session->set_flashdata('message', '<div class="alert alert-warning">Username <strong>' . $input['username'] . '</strong> sudah digunakan.</div>');
             redirect('admin/profil');
         }
 
-        // Verifikasi password lama
-        if (!password_verify($password_lama, $user['password'])) {
+        $data = [
+            'nama_lengkap' => $input['nama_lengkap'],
+            'username'     => $input['username']
+        ];
+
+        if ($this->M_Auth->update_user($user_id, $data)) {
+            // Update session
+            $this->session->set_userdata('nama_lengkap', $input['nama_lengkap']);
+            $this->session->set_userdata('username', $input['username']);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success">Profil berhasil diperbarui.</div>');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger">Gagal memperbarui profil.</div>');
+        }
+
+        redirect('admin/profil');
+    }
+
+    public function update_password()
+    {
+        $user_id = $this->session->userdata('id_user');
+        $input = $this->input->post(null, true);
+
+        $user = $this->M_Auth->get_user_by_id($user_id);
+
+        if (!password_verify($input['password_lama'], $user['password'])) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger">Password lama salah.</div>');
             redirect('admin/profil');
         }
 
-        // Enkripsi password baru
-        $hashed_password = password_hash($password_baru, PASSWORD_DEFAULT);
+        if ($input['password_lama'] === $input['password_baru']) {
+            $this->session->set_flashdata('message', '<div class="alert alert-warning">Password baru tidak boleh sama dengan password lama.</div>');
+            redirect('admin/profil');
+        }
 
-        // Update ke database via M_Auth
-        $this->M_Auth->update_password($admin_id, $hashed_password);
+        $new_password = password_hash($input['password_baru'], PASSWORD_DEFAULT);
+        if ($this->M_Auth->update_password($user_id, $new_password)) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success">Password berhasil diperbarui.</div>');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger">Gagal memperbarui password.</div>');
+        }
 
-        // Set notifikasi sukses
-        $this->session->set_flashdata('message', '<div class="alert alert-success">Password berhasil diperbarui.</div>');
+        redirect('admin/profil');
+    }
+
+    public function upload_foto()
+    {
+        $user_id = $this->session->userdata('id_user');
+        $user = $this->M_Auth->get_user_by_id($user_id);
+
+        $config['upload_path']   = './assets/images/profil/';
+        $config['allowed_types'] = 'jpg|jpeg|png|gif';
+        $config['max_size']      = 2048; // 2MB
+        $config['encrypt_name']  = TRUE;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('foto_profil')) {
+            $error = $this->upload->display_errors();
+            $this->session->set_flashdata('message', '<div class="alert alert-danger">Upload gagal: ' . $error . '</div>');
+        } else {
+            $file = $this->upload->data();
+
+            // Hapus foto lama jika bukan default
+            if ($user['foto'] && $user['foto'] !== 'default.jpg') {
+                @unlink(FCPATH . 'assets/images/profil/' . $user['foto']);
+            }
+
+            // Simpan nama file ke database
+            $this->M_Auth->update_user($user_id, ['foto' => $file['file_name']]);
+
+            // Update session
+            $this->session->set_userdata('foto', $file['file_name']);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success">Foto profil berhasil diubah.</div>');
+        }
+
         redirect('admin/profil');
     }
 }

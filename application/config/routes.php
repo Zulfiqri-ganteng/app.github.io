@@ -124,3 +124,6 @@ $route['layanan']       = 'home/layanan';
 | Akhiri tanpa penutup PHP untuk hindari output tak terduga
 |--------------------------------------------------------------------------
 */
+
+$route['admin/profil/upload_foto'] = 'admin/Profil/upload_foto';
+$route['admin/profil/update_password'] = 'admin/Profil/update_password';
