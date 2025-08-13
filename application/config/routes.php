@@ -31,9 +31,9 @@ $route['translate_uri_dashes'] = FALSE;
 | Rute Otentikasi (Login, Register, Logout)
 |--------------------------------------------------------------------------
 */
-$route['auth/login']    = 'Auth/login';
-$route['auth/logout']   = 'Auth/logout';
-$route['auth/register'] = 'Auth/register';
+$route['auth'] = 'Auth';
+$route['auth/login'] = 'Auth/index';
+$route['auth/logout'] = 'Auth/logout';
 
 
 /*

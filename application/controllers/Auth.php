@@ -11,56 +11,76 @@ class Auth extends CI_Controller
         $this->load->library('form_validation');
     }
 
+    /**
+     * Halaman login
+     */
     public function index()
     {
-        if ($this->session->userdata('level')) {
-            redirect(strtolower($this->session->userdata('level')) . '/dashboard');
+        // Cek jika sudah login
+        if ($this->session->userdata('logged_in')) {
+            redirect('admin/dashboard');
         }
 
-        $this->form_validation->set_rules('username', 'Username', 'trim|required');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required');
+        $data['judul'] = 'Login Area';
+
+        $this->form_validation->set_rules('username', 'Username', 'required|trim');
+        $this->form_validation->set_rules('password', 'Password', 'required|trim');
 
         if ($this->form_validation->run() == FALSE) {
-            $data['judul'] = 'Login';
-            $this->load->view('templates/header', $data);
-            $this->load->view('v_login');
-            $this->load->view('templates/footer');
+            $this->load->view('templates/header_auth', $data);
+            $this->load->view('auth/v_login', $data);
+            $this->load->view('templates/footer_auth');
         } else {
             $this->_login();
         }
     }
 
+    /**
+     * Proses login
+     */
     private function _login()
     {
         $username = $this->input->post('username');
         $password = $this->input->post('password');
 
-        $user = $this->M_Auth->get_user($username);
+        $user = $this->M_Auth->get_user_by_username($username);
 
-        if ($user) {
-            if (password_verify($password, trim($user['password']))) {
-                $data_session = [
-                    'id_user' => $user['id'],
-                    'username' => $user['username'],
-                    'level' => $user['level'],
-                    'nama_lengkap' => $user['nama_lengkap']
-                ];
-                $this->session->set_userdata($data_session);
+        if ($user && password_verify($password, $user['password'])) {
+            // Simpan data user di session
+            $data = [
+                'id_user' => $user['id'],
+                'username' => $user['username'],
+                'level' => $user['level'],
+                'logged_in' => TRUE,
+            ];
+            $this->session->set_userdata($data);
 
-                redirect(strtolower($user['level']) . '/dashboard');
+            // Redirect berdasarkan level
+            if ($user['level'] === 'admin') {
+                redirect('admin/dashboard');
+            } elseif ($user['level'] === 'siswa') {
+                redirect('siswa/dashboard');
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password salah!</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger">Akses ditolak.</div>');
                 redirect('auth');
             }
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Username tidak terdaftar!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger">Username atau password salah.</div>');
             redirect('auth');
         }
     }
 
+    /**
+     * Logout
+     */
     public function logout()
     {
-        $this->session->sess_destroy();
+        $this->session->unset_userdata('logged_in');
+        $this->session->unset_userdata('id_user');
+        $this->session->unset_userdata('username');
+        $this->session->unset_userdata('level');
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success">Anda telah keluar dari akun.</div>');
         redirect('auth');
     }
 }
